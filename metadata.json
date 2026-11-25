@@ -1,0 +1,10 @@
+{
+  "name": "Antri Yuk",
+  "description": "Aplikasi antrean salon kecantikan modern dengan sistem tiket QR Code, cetak struk thermal 58mm/80mm, manajemen admin & pemilik salon, serta layar TV antrean bersuara.",
+  "requestFramePermissions": [
+    "CAMERA"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

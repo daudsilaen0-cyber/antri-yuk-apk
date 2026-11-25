@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Antri Yuk</string>
+    <string name="app_tagline">Salon Kecantikan &amp; Perawatan Rambut</string>
+    <string name="ticket_wait_message">Mohon menunggu hingga nomor antrean Anda dipanggil.</string>
+    <string name="role_customer">Pelanggan</string>
+    <string name="role_admin">Admin Salon</string>
+    <string name="role_owner">Pemilik Salon</string>
+    <string name="role_tv">Layar TV</string>
+    <string name="camera_permission_rationale">Izin kamera diperlukan untuk memindai QR Code tiket antrean pelanggan.</string>
+</resources>
