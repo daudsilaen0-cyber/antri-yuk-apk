@@ -35,13 +35,13 @@ import java.util.UUID
 data class AntriYukUiState(
     val currentRole: UserRole = UserRole.PELANGGAN,
     val salons: List<Salon> = emptyList(),
-    val selectedSalonId: String = "salon_aura",
+    val selectedSalonId: String = "salon_casy",
     val services: List<SalonService> = emptyList(),
     val stylists: List<Hairstylist> = emptyList(),
     val tickets: List<QueueTicket> = emptyList(),
-    val selectedServiceIds: Set<String> = setOf("srv_1"),
+    val selectedServiceIds: Set<String> = setOf("srv_c1"),
     val selectedStylistId: String? = null, // null = Kapster Tersedia / Tercepat
-    val activeCustomerTicketId: String? = "tkt_005",
+    val activeCustomerTicketId: String? = "tkt_c03",
     val isAdminAuthenticated: Boolean = false,
     val loggedInStaffRole: UserRole? = null,
     val loggedInStaffName: String = "",
@@ -141,10 +141,10 @@ data class AntriYukUiState(
 
 private data class LocalSessionState(
     val currentRole: UserRole = UserRole.PELANGGAN,
-    val selectedSalonId: String = "salon_aura",
-    val selectedServiceIds: Set<String> = setOf("srv_1"),
+    val selectedSalonId: String = "salon_casy",
+    val selectedServiceIds: Set<String> = setOf("srv_c1"),
     val selectedStylistId: String? = null,
-    val activeCustomerTicketId: String? = "tkt_005",
+    val activeCustomerTicketId: String? = "tkt_c03",
     val isAdminAuthenticated: Boolean = false,
     val loggedInStaffRole: UserRole? = null,
     val loggedInStaffName: String = "",
@@ -153,9 +153,9 @@ private data class LocalSessionState(
         InAppNotification(
             id = "notif_init",
             title = "Antrean Hampir Dipanggil",
-            message = "Nomor antrean A-005 (Sekar Kinanti) tinggal 1 antrean lagi menuju kursi layanan.",
+            message = "Nomor antrean C-003 (Sekar Kinanti) tinggal 1 antrean lagi menuju kursi layanan.",
             channelType = NotificationChannelType.WHATSAPP_SIM,
-            whatsappPreviewText = "Halo Sekar Kinanti, nomor antrean *A-005* di *Aura Rose Beauty & Hair* sebentar lagi dipanggil. Mohon bersiap di area tunggu salon."
+            whatsappPreviewText = "Halo Sekar Kinanti, nomor antrean *C-003* di *Casy Salon HM Yamin* sebentar lagi dipanggil. Mohon bersiap di area tunggu salon."
         )
     ),
     val activeBannerNotification: InAppNotification? = null,
@@ -279,10 +279,10 @@ class QueueViewModel(application: Application) : AndroidViewModel(application), 
         val trimmedEmail = email.trim().lowercase()
         val trimmedPin = pin.trim()
         val valid = when {
-            trimmedEmail == "owner@aurarose.id" && trimmedPin == "owner123" -> {
+            (trimmedEmail == "owner@antriyuk.id" || trimmedEmail == "owner@aurarose.id") && trimmedPin == "owner123" -> {
                 Triple(true, UserRole.PEMILIK_SALON, "Ibu Ratna Kusuma (Owner)")
             }
-            trimmedEmail == "admin@aurarose.id" && trimmedPin == "123456" -> {
+            (trimmedEmail == "admin@antriyuk.id" || trimmedEmail == "admin@aurarose.id") && trimmedPin == "123456" -> {
                 Triple(true, targetRole.takeIf { it == UserRole.PEMILIK_SALON } ?: UserRole.ADMIN_SALON, "Dina Resepsionis (Admin)")
             }
             trimmedPin == "123456" && trimmedEmail.isNotBlank() -> {

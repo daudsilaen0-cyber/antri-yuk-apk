@@ -77,7 +77,7 @@ val AntriYukShapes = Shapes(
 
 @Composable
 fun AntriYukTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

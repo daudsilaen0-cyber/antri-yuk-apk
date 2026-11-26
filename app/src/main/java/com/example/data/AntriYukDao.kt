@@ -11,6 +11,9 @@ interface AntriYukDao {
     @Query("SELECT * FROM salons ORDER BY isOpen DESC, name ASC")
     fun observeSalons(): Flow<List<SalonEntity>>
 
+    @Query("SELECT * FROM salons")
+    suspend fun getSalonsSnapshot(): List<SalonEntity>
+
     @Query("SELECT COUNT(*) FROM salons")
     suspend fun getSalonCount(): Int
 
@@ -52,4 +55,16 @@ interface AntriYukDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertTicket(ticket: QueueTicketEntity)
+
+    @Query("DELETE FROM salons")
+    suspend fun clearAllSalons()
+
+    @Query("DELETE FROM salon_services")
+    suspend fun clearAllServices()
+
+    @Query("DELETE FROM hairstylists")
+    suspend fun clearAllStylists()
+
+    @Query("DELETE FROM queue_tickets")
+    suspend fun clearAllTickets()
 }

@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase
         HairstylistEntity::class,
         QueueTicketEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AntriYukDatabase : RoomDatabase() {
@@ -28,7 +28,7 @@ abstract class AntriYukDatabase : RoomDatabase() {
                     context.applicationContext,
                     AntriYukDatabase::class.java,
                     "antriyuk_salon.db"
-                ).build().also { INSTANCE = it }
+                ).fallbackToDestructiveMigration(true).build().also { INSTANCE = it }
             }
         }
     }

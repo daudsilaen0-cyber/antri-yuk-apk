@@ -58,6 +58,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -103,6 +104,7 @@ import com.example.ui.theme.DeepCharcoal
 import com.example.ui.theme.DeepTerracotta
 import com.example.ui.theme.EmeraldSage
 import com.example.ui.theme.EmeraldSoft
+import com.example.ui.theme.MutedTaupe
 import com.example.ui.theme.PurePorcelain
 import com.example.ui.theme.QueueNumberCardStyle
 import com.example.ui.theme.QueueNumberDisplayStyle
@@ -308,12 +310,24 @@ fun CustomerScreen(
                                 style = MaterialTheme.typography.titleLarge,
                                 color = DeepCharcoal
                             )
+                            val customerFieldColors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.Black,
+                                unfocusedTextColor = Color.Black,
+                                cursorColor = RoseGoldTerracotta,
+                                focusedBorderColor = RoseGoldTerracotta,
+                                unfocusedBorderColor = SilkHairline,
+                                focusedLabelColor = RoseGoldTerracotta,
+                                unfocusedLabelColor = MutedTaupe,
+                                focusedPlaceholderColor = MutedTaupe,
+                                unfocusedPlaceholderColor = MutedTaupe
+                            )
                             OutlinedTextField(
                                 value = customerName,
                                 onValueChange = { customerName = it },
                                 label = { Text("Nama Anda") },
                                 placeholder = { Text("Contoh: Anisa Rahmawati") },
                                 singleLine = true,
+                                colors = customerFieldColors,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .testTag("customer_name_input")
@@ -324,6 +338,7 @@ fun CustomerScreen(
                                 label = { Text("Nomor WhatsApp (untuk notifikasi antrean)") },
                                 placeholder = { Text("0812-xxxx-xxxx") },
                                 singleLine = true,
+                                colors = customerFieldColors,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .testTag("customer_phone_input")
@@ -334,30 +349,56 @@ fun CustomerScreen(
                                 shape = RoundedCornerShape(14.dp),
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Row(
-                                    modifier = Modifier.padding(14.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(14.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
-                                    Column {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Column(
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .padding(end = 12.dp)
+                                        ) {
+                                            Text(
+                                                text = "Estimasi Total",
+                                                style = MaterialTheme.typography.labelMedium,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                            Text(
+                                                text = "${chosenServices.size} Layanan • $totalDuration Menit",
+                                                style = MaterialTheme.typography.labelLarge,
+                                                color = DeepTerracotta,
+                                                maxLines = 1,
+                                                overflow = TextOverflow.Ellipsis
+                                            )
+                                        }
                                         Text(
-                                            text = "${chosenServices.size} Layanan • $totalDuration Menit",
-                                            style = MaterialTheme.typography.labelLarge,
-                                            color = DeepTerracotta
-                                        )
-                                        Text(
-                                            text = selectedSalon?.cancellationPolicy ?: "",
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            maxLines = 2
+                                            text = QrAndPrinterHelper.formatRupiah(totalPrice),
+                                            style = MaterialTheme.typography.titleLarge.copy(
+                                                fontFeatureSettings = "tnum"
+                                            ),
+                                            fontWeight = FontWeight.Bold,
+                                            color = DeepCharcoal,
+                                            maxLines = 1,
+                                            softWrap = false
                                         )
                                     }
-                                    Text(
-                                        text = QrAndPrinterHelper.formatRupiah(totalPrice),
-                                        style = MaterialTheme.typography.titleLarge,
-                                        fontWeight = FontWeight.Bold,
-                                        color = DeepCharcoal
-                                    )
+
+                                    val policy = selectedSalon?.cancellationPolicy.orEmpty()
+                                    if (policy.isNotBlank()) {
+                                        HorizontalDivider(color = SilkHairline.copy(alpha = 0.8f))
+                                        Text(
+                                            text = policy,
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
                                 }
                             }
 

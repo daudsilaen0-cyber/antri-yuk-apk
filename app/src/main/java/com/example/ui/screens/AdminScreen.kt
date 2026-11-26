@@ -847,7 +847,7 @@ private fun StaffLoginGate(
     modifier: Modifier = Modifier
 ) {
     var email by remember(isOwnerMode) {
-        mutableStateOf(if (isOwnerMode) "owner@aurarose.id" else "admin@aurarose.id")
+        mutableStateOf(if (isOwnerMode) "owner@antriyuk.id" else "admin@antriyuk.id")
     }
     var pin by remember(isOwnerMode) {
         mutableStateOf(if (isOwnerMode) "owner123" else "123456")
@@ -950,7 +950,7 @@ private fun StaffLoginGate(
                 }
 
                 Text(
-                    text = "Kredensial Demo: admin@aurarose.id / 123456 • owner@aurarose.id / owner123",
+                    text = "Kredensial Demo: admin@antriyuk.id / 123456 • owner@antriyuk.id / owner123",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

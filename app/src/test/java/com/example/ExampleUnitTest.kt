@@ -20,20 +20,20 @@ class ExampleUnitTest {
         status: QueueStatus = QueueStatus.MENUNGGU
     ): QueueTicket {
         val nonce = QrAndPrinterHelper.generateSecureNonce()
-        val token = QrAndPrinterHelper.buildSignedQrToken("tkt_test", "A-007", nonce)
+        val token = QrAndPrinterHelper.buildSignedQrToken("tkt_test", "C-007", nonce)
         return QueueTicket(
             id = "tkt_test",
-            salonId = "salon_aura",
-            salonName = "Aura Rose Beauty & Hair",
-            queueNumber = "A-007",
+            salonId = "salon_casy",
+            salonName = "Casy Salon HM Yamin",
+            queueNumber = "C-007",
             customerName = "Anisa Rahmawati",
             customerPhone = "0812-8899-0011",
-            serviceIds = listOf("srv_1", "srv_2"),
-            serviceNames = listOf("Signature Haircut & Blow", "Rose Gold Hair Spa"),
-            totalPriceRupiah = 385000,
-            totalDurationMinutes = 105,
-            stylistId = "sty_1",
-            stylistName = "Nadia Putri",
+            serviceIds = listOf("srv_c1", "srv_c4"),
+            serviceNames = listOf("Signature Haircut & Blow", "Aromatic Creambath Spa"),
+            totalPriceRupiah = 220000,
+            totalDurationMinutes = 90,
+            stylistId = "sty_c1",
+            stylistName = "Casy Putri",
             status = status,
             qrToken = token,
             qrNonce = nonce,
@@ -49,9 +49,9 @@ class ExampleUnitTest {
         val parsed = QrAndPrinterHelper.verifyTokenSignature(ticket.qrToken)
         assertNotNull(parsed)
         assertEquals("tkt_test", parsed?.ticketId)
-        assertEquals("A-007", parsed?.queueNumber)
+        assertEquals("C-007", parsed?.queueNumber)
 
-        val tampered = ticket.qrToken.replace("A-007", "A-001")
+        val tampered = ticket.qrToken.replace("C-007", "C-001")
         assertNull(QrAndPrinterHelper.verifyTokenSignature(tampered))
     }
 
@@ -87,14 +87,14 @@ class ExampleUnitTest {
 
         val normalized58 = text58.replace("\n", " ")
         assertTrue(normalized58.contains("ANTRI YUK"))
-        assertTrue(normalized58.contains("Aura Rose Beauty & Hair"))
-        assertTrue(normalized58.contains("A-007"))
+        assertTrue(normalized58.contains("Casy Salon HM Yamin"))
+        assertTrue(normalized58.contains("C-007"))
         assertTrue(normalized58.contains("Anisa Rahmawati"))
-        assertTrue(normalized58.contains("Nadia Putri"))
+        assertTrue(normalized58.contains("Casy Putri"))
         assertTrue(normalized58.contains("Mohon menunggu hingga nomor antrean Anda dipanggil."))
 
         assertTrue(text80.contains("ANTRI YUK"))
-        assertTrue(text80.contains("A-007"))
+        assertTrue(text80.contains("C-007"))
         assertTrue(bytes80.size >= bytes58.size)
     }
 }

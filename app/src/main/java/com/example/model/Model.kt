@@ -153,66 +153,125 @@ fun defaultOperatingSchedule(): List<OperatingDayHours> = listOf(
 object DummySalonData {
     val salons = listOf(
         Salon(
-            id = "salon_aura",
-            name = "Aura Rose Beauty & Hair",
-            tagline = "Perawatan Rambut & Kulit Kepala Premium",
-            address = "Jl. Senopati No. 48, Kebayoran Baru, Jakarta Selatan",
-            phoneWhatsApp = "0812-8890-4411",
+            id = "salon_casy",
+            name = "Casy Salon HM Yamin",
+            tagline = "Hair Styling, Coloring & Perawatan Rambut Profesional",
+            address = "Jl. Prof. H. M. Yamin No.225 E, Sei Kera Hilir I, Kec. Medan Perjuangan, Kota Medan, Sumatera Utara 20222",
+            phoneWhatsApp = "0812-6500-2022",
             isOpen = true,
-            openHoursLabel = "09:00 - 20:00 WIB",
+            openHoursLabel = "09:00 - 20:30 WIB",
             cancellationPolicy = "Pembatalan gratis sebelum nomor dipanggil ke kursi layanan.",
-            queuePrefix = "A",
+            queuePrefix = "C",
             rating = 4.9,
             imageRes = R.drawable.img_salon_hero
         ),
         Salon(
-            id = "salon_velvet",
-            name = "Velvet Atelier Hair Studio",
-            tagline = "Coloring, Balayage & Hair Styling Minimalis",
-            address = "Jl. Kemang Raya No. 19, Jakarta Selatan",
-            phoneWhatsApp = "0813-7721-9030",
+            id = "salon_ln",
+            name = "LN Beauty Salon Halat",
+            tagline = "LN beauty • Perawatan Rambut, Facial & Kecantikan",
+            address = "Jl. Halat, Kota Matsum IV, Kec. Medan Area, Kota Medan, Sumatera Utara 20216",
+            phoneWhatsApp = "0813-7721-2021",
             isOpen = true,
-            openHoursLabel = "10:00 - 21:00 WIB",
+            openHoursLabel = "09:30 - 20:30 WIB",
             cancellationPolicy = "Maksimal pembatalan 10 menit sebelum estimasi panggilan.",
-            queuePrefix = "V",
-            rating = 4.8,
+            queuePrefix = "L",
+            rating = 4.9,
             imageRes = R.drawable.img_salon_studio
         ),
         Salon(
-            id = "salon_serene",
-            name = "Serene Botanica Hair Spa",
-            tagline = "Organic Creambath, Facial & Blowout",
-            address = "Jl. Dharmawangsa III No. 12, Jakarta Selatan",
-            phoneWhatsApp = "0811-9450-2208",
-            isOpen = false,
-            openHoursLabel = "10:00 - 19:00 WIB (Sedang Tutup)",
-            cancellationPolicy = "Pembatalan diperbolehkan selama status masih Menunggu.",
-            queuePrefix = "S",
-            rating = 4.7,
+            id = "salon_apin",
+            name = "Apin Salon",
+            tagline = "Potong Rambut Presisi, Creambath & Smoothing",
+            address = "Jl. Sena No.50, Perintis, Kec. Medan Tim., Kota Medan, Sumatera Utara 20239",
+            phoneWhatsApp = "0812-6044-2023",
+            isOpen = true,
+            openHoursLabel = "09:00 - 20:00 WIB",
+            cancellationPolicy = "Pembatalan gratis sebelum nomor dipanggil ke kursi layanan.",
+            queuePrefix = "A",
+            rating = 4.8,
             imageRes = R.drawable.img_salon_glow
+        ),
+        Salon(
+            id = "salon_farida",
+            name = "Farida Beauty Salon & Spa",
+            tagline = "Beauty Salon, Hair Spa & Body Treatment",
+            address = "Jl. Tempuling No.163, Sidorejo Hilir, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20222",
+            phoneWhatsApp = "0813-9655-2022",
+            isOpen = true,
+            openHoursLabel = "09:00 - 21:00 WIB",
+            cancellationPolicy = "Pembatalan diperbolehkan selama status masih Menunggu.",
+            queuePrefix = "F",
+            rating = 4.9,
+            imageRes = R.drawable.img_salon_hero
+        ),
+        Salon(
+            id = "salon_kendy",
+            name = "KENDY SALON",
+            tagline = "Potong Rambut, Coloring & Perawatan Rambut Profesional",
+            address = "Jl. Platina Raya No.88c, Rengas Pulau, Kec. Medan Marelan, Kota Medan, Sumatera Utara 20255",
+            phoneWhatsApp = "0812-6500-8888",
+            isOpen = true,
+            openHoursLabel = "09:00 - 21:00 WIB",
+            cancellationPolicy = "Pembatalan gratis sebelum nomor dipanggil ke kursi layanan.",
+            queuePrefix = "K",
+            rating = 4.9,
+            imageRes = R.drawable.img_salon_studio
         )
     )
 
     val services = listOf(
-        SalonService("srv_1", "salon_aura", "Signature Haircut & Blow", "Gunting & Styling", "Potong rambut presisi sesuai bentuk wajah plus cuci & blow natural.", 165000, 45),
-        SalonService("srv_2", "salon_aura", "Rose Gold Hair Spa", "Perawatan Rambut", "Nutrisi mendalam dengan ekstrak mawar & pijat relaksasi bahu.", 220000, 60),
-        SalonService("srv_3", "salon_aura", "Keratin Silk Smoothing", "Tekstur & Lurus", "Melembutkan rambut mengembang hingga 4 bulan tanpa kaku.", 680000, 120),
-        SalonService("srv_4", "salon_aura", "Organic Scalp Detox", "Kulit Kepala", "Detoksifikasi folikel rambut untuk mengurangi rontok & ketombe.", 195000, 40),
-        SalonService("srv_5", "salon_aura", "Glam Styling & Curling", "Gunting & Styling", "Penataan rambut acara spesial agar tahan lama & bervolume.", 150000, 35),
-        SalonService("srv_6", "salon_velvet", "Precision Trim & Wash", "Gunting & Styling", "Rapikan ujung rambut plus vitamin pelindung panas.", 140000, 40),
-        SalonService("srv_7", "salon_velvet", "Soft Balayage Coloring", "Pewarnaan", "Gradasi warna lembut dengan cat rambut bebas amonia.", 750000, 150),
-        SalonService("srv_8", "salon_velvet", "Creambath Alpukat Organik", "Perawatan Rambut", "Masker alpukat segar & uap hangat untuk kilau alami.", 135000, 50),
-        SalonService("srv_9", "salon_serene", "Botanical Aromatherapy Spa", "Perawatan Rambut", "Terapi rambut minyak esensial lavender & chamomile.", 210000, 55),
-        SalonService("srv_10", "salon_serene", "Express Blow & Styling", "Gunting & Styling", "Cuci bersih dan blow dry cepat untuk aktivitas harian.", 95000, 30)
+        // Casy Salon HM Yamin
+        SalonService("srv_c1", "salon_casy", "Signature Haircut & Blow", "Gunting & Styling", "Potong rambut presisi sesuai bentuk wajah plus cuci & blow natural.", 95000, 40),
+        SalonService("srv_c2", "salon_casy", "Keratin Silk Smoothing", "Tekstur & Lurus", "Pelurusan lembut berkilau tahan lama tanpa membuat rambut kaku.", 480000, 110),
+        SalonService("srv_c3", "salon_casy", "Hair Coloring & Balayage", "Pewarnaan", "Pewarnaan gradasi modern dengan serum pelindung kutikula rambut.", 420000, 120),
+        SalonService("srv_c4", "salon_casy", "Aromatic Creambath Spa", "Perawatan Rambut", "Creambath nutrisi mendalam lengkap dengan pijat relaksasi bahu.", 125000, 50),
+
+        // LN Beauty Salon Halat
+        SalonService("srv_l1", "salon_ln", "LN Glow Facial & Detox", "Perawatan Wajah", "Pembersihan komedo lembut, masker pencerah, dan pijat wajah relaksasi.", 185000, 60),
+        SalonService("srv_l2", "salon_ln", "Korean Layer Cut & Styling", "Gunting & Styling", "Potongan layer ringan modern lengkap dengan cuci dan blow bervolume.", 110000, 45),
+        SalonService("srv_l3", "salon_ln", "Silk Protein Hair Mask", "Perawatan Rambut", "Perawatan batang rambut kering agar kembali lembut dan mudah diatur.", 140000, 45),
+        SalonService("srv_l4", "salon_ln", "Glossy Fashion Coloring", "Pewarnaan", "Pewarnaan rambut bebas amonia dengan kilau tahan lama.", 350000, 90),
+
+        // Apin Salon
+        SalonService("srv_a1", "salon_apin", "Potong Rambut & Cuci Blow", "Gunting & Styling", "Potong rambut rapi untuk tampilan harian plus cuci bersih dan tonic.", 75000, 35),
+        SalonService("srv_a2", "salon_apin", "Creambath Ginseng & Kemiri", "Perawatan Rambut", "Menguatkan akar rambut dan mengurangi rontok dengan pijat kepala.", 105000, 45),
+        SalonService("srv_a3", "salon_apin", "Smoothing Natural Shine", "Tekstur & Lurus", "Membuat rambut halus lurus alami dan bebas mengembang.", 390000, 100),
+        SalonService("srv_a4", "salon_apin", "Styling & Catok Pesta", "Gunting & Styling", "Penataan rambut acara spesial agar bervolume dan tahan lama.", 120000, 40),
+
+        // Farida Beauty Salon & Spa
+        SalonService("srv_f1", "salon_farida", "Royal Hair Spa & Lulur", "Perawatan Rambut", "Paket relaksasi hair spa aromaterapi plus lulur badan menyegarkan.", 245000, 75),
+        SalonService("srv_f2", "salon_farida", "Facial Brightening Spa", "Perawatan Wajah", "Perawatan wajah menyeluruh untuk kulit cerah, lembap, dan segar.", 175000, 55),
+        SalonService("srv_f3", "salon_farida", "Potong Rambut & Hair Mask", "Gunting & Styling", "Potong rambut rapi dilanjutkan masker vitamin untuk rambut sehat.", 130000, 50),
+        SalonService("srv_f4", "salon_farida", "Totok Wajah & Relaxing Massage", "Perawatan Wajah", "Relaksasi otot wajah dan bahu untuk melancarkan sirkulasi.", 150000, 45),
+
+        // KENDY SALON
+        SalonService("srv_k1", "salon_kendy", "Potong Rambut & Styling", "Gunting & Styling", "Potong rambut rapi modern plus cuci bersih dan hair tonic.", 85000, 35),
+        SalonService("srv_k2", "salon_kendy", "Hair Coloring & Highlight", "Pewarnaan", "Pewarnaan rambut tahan lama dengan serum pelindung warna.", 320000, 90),
+        SalonService("srv_k3", "salon_kendy", "Creambath & Hair Mask", "Perawatan Rambut", "Perawatan intensif rambut kering dengan pijat relaksasi.", 115000, 45),
+        SalonService("srv_k4", "salon_kendy", "Smoothing Keratin Premium", "Tekstur & Lurus", "Pelurusan alami lembut berkilau dan bebas kusut.", 450000, 110)
     )
 
     val stylists = listOf(
-        Hairstylist("sty_1", "salon_aura", "Nadia Putri", "Master Stylist & Layering", 7, true, "Kursi 1"),
-        Hairstylist("sty_2", "salon_aura", "Raka Pratama", "Color & Keratin Specialist", 5, true, "Kursi 2"),
-        Hairstylist("sty_3", "salon_aura", "Clarissa Tan", "Hair Spa & Blowout", 4, true, "Kursi 3"),
-        Hairstylist("sty_4", "salon_velvet", "Maya Wijaya", "Balayage & Fashion Color", 6, true, "Kursi 1"),
-        Hairstylist("sty_5", "salon_velvet", "Dimas Kusuma", "Signature Cut & Styling", 5, true, "Kursi 2"),
-        Hairstylist("sty_6", "salon_serene", "Sinta Dewi", "Holistic Scalp Therapist", 8, false, "Ruang Spa 1")
+        // Casy Salon HM Yamin
+        Hairstylist("sty_c1", "salon_casy", "Casy Putri", "Master Stylist & Layering", 8, true, "Kursi 1"),
+        Hairstylist("sty_c2", "salon_casy", "Raka Pratama", "Color & Keratin Specialist", 5, true, "Kursi 2"),
+        Hairstylist("sty_c3", "salon_casy", "Nadia Siregar", "Hair Spa & Blowout", 4, true, "Kursi 3"),
+
+        // LN Beauty Salon Halat
+        Hairstylist("sty_l1", "salon_ln", "Lina Tanjung", "Facial & Beauty Therapist", 7, true, "Ruang Beauty 1"),
+        Hairstylist("sty_l2", "salon_ln", "Novi Harahap", "Korean Cut & Coloring", 5, true, "Kursi 1"),
+
+        // Apin Salon
+        Hairstylist("sty_a1", "salon_apin", "Apin Wijaya", "Precision Cut & Styling", 9, true, "Kursi 1"),
+        Hairstylist("sty_a2", "salon_apin", "Dinda Lubis", "Creambath & Smoothing", 5, true, "Kursi 2"),
+
+        // Farida Beauty Salon & Spa
+        Hairstylist("sty_f1", "salon_farida", "Farida Nasution", "Holistic Spa & Facial", 10, true, "Ruang Spa 1"),
+        Hairstylist("sty_f2", "salon_farida", "Sari Batubara", "Hair Care & Styling", 6, true, "Kursi 1"),
+
+        // KENDY SALON
+        Hairstylist("sty_k1", "salon_kendy", "Kendy Wijaya", "Master Cut & Coloring", 8, true, "Kursi 1"),
+        Hairstylist("sty_k2", "salon_kendy", "Bella Tarigan", "Smoothing & Hair Care", 5, true, "Kursi 2")
     )
 
     val monthlyReports = listOf(

@@ -1,0 +1,136 @@
+name: Publish Debug APK Release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - apk-distribution/app-debug.apk
+      - apk-distribution/app-debug.apk.sha256
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-debug-apk-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish-apk:
+    name: Validate & Publish Prebuilt Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate prebuilt APK existence and archive integrity
+        id: validate_apk
+        run: |
+          set -euo pipefail
+          APK_PATH="apk-distribution/app-debug.apk"
+          SHA_PATH="apk-distribution/app-debug.apk.sha256"
+
+          if [ ! -f "$APK_PATH" ] || [ ! -s "$APK_PATH" ]; then
+            echo "::error::Berkas $APK_PATH tidak ditemukan atau berukuran 0 byte."
+            exit 1
+          fi
+
+          if [ ! -f "$SHA_PATH" ] || [ ! -s "$SHA_PATH" ]; then
+            echo "::error::Berkas checksum $SHA_PATH tidak ditemukan atau kosong."
+            exit 1
+          fi
+
+          if ! unzip -tq "$APK_PATH"; then
+            echo "::error::Struktur arsip APK pada $APK_PATH tidak valid."
+            exit 1
+          fi
+
+          APK_BYTES=$(stat -c%s "$APK_PATH")
+          APK_HUMAN=$(numfmt --to=iec-i --suffix=B "$APK_BYTES" 2>/dev/null || echo "${APK_BYTES} bytes")
+          echo "apk_bytes=${APK_BYTES}" >> "$GITHUB_OUTPUT"
+          echo "apk_human=${APK_HUMAN}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify APK SHA-256 checksum
+        id: verify_checksum
+        working-directory: apk-distribution
+        run: |
+          set -euo pipefail
+          if ! sha256sum -c app-debug.apk.sha256; then
+            echo "::error::Checksum SHA-256 tidak cocok dengan berkas app-debug.apk."
+            exit 1
+          fi
+          ACTUAL_SHA256=$(sha256sum app-debug.apk | awk '{print $1}')
+          echo "sha256=${ACTUAL_SHA256}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release and upload APK
+        id: create_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APK_BYTES: ${{ steps.validate_apk.outputs.apk_bytes }}
+          APK_HUMAN: ${{ steps.validate_apk.outputs.apk_human }}
+          ACTUAL_SHA256: ${{ steps.verify_checksum.outputs.sha256 }}
+        run: |
+          set -euo pipefail
+          TAG_NAME="debug-apk-build-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
+          RELEASE_TITLE="Antri Yuk Debug APK (${TAG_NAME})"
+          RELEASE_NOTES=$(printf '%s\n' \
+            "Rilis otomatis berkas debug APK yang telah dikompilasi di Google AI Studio." \
+            "" \
+            "- **Application:** Antri Yuk" \
+            "- **Application ID:** \`com.aistudio.antriyuk.k7m2px\`" \
+            "- **Variant:** Debug APK (untuk pengujian pada perangkat Android yang kompatibel)" \
+            "- **APK Size:** ${APK_HUMAN} (${APK_BYTES} bytes)" \
+            "- **SHA-256:** \`${ACTUAL_SHA256}\`")
+
+          gh release create "$TAG_NAME" \
+            "apk-distribution/app-debug.apk" \
+            --title "$RELEASE_TITLE" \
+            --notes "$RELEASE_NOTES" \
+            --latest
+
+          RELEASE_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG_NAME}"
+          DIRECT_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/latest/download/app-debug.apk"
+
+          echo "tag_name=${TAG_NAME}" >> "$GITHUB_OUTPUT"
+          echo "release_url=${RELEASE_URL}" >> "$GITHUB_OUTPUT"
+          echo "direct_url=${DIRECT_URL}" >> "$GITHUB_OUTPUT"
+
+      - name: Write job summary on success
+        if: success()
+        env:
+          TAG_NAME: ${{ steps.create_release.outputs.tag_name }}
+          APK_BYTES: ${{ steps.validate_apk.outputs.apk_bytes }}
+          APK_HUMAN: ${{ steps.validate_apk.outputs.apk_human }}
+          ACTUAL_SHA256: ${{ steps.verify_checksum.outputs.sha256 }}
+          RELEASE_URL: ${{ steps.create_release.outputs.release_url }}
+          DIRECT_URL: ${{ steps.create_release.outputs.direct_url }}
+        run: |
+          {
+            echo "## Publikasi Debug APK Berhasil"
+            echo ""
+            echo "| Keterangan | Nilai |"
+            echo "| --- | --- |"
+            echo "| Status Publikasi | SUCCESSFUL |"
+            echo "| Application | Antri Yuk |"
+            echo "| Application ID | \`com.aistudio.antriyuk.k7m2px\` |"
+            echo "| Release Tag | \`${TAG_NAME}\` |"
+            echo "| APK Size | ${APK_HUMAN} (${APK_BYTES} bytes) |"
+            echo "| SHA-256 | \`${ACTUAL_SHA256}\` |"
+            echo "| GitHub Release | ${RELEASE_URL} |"
+            echo "| Direct Download | ${DIRECT_URL} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Write job summary on failure
+        if: failure()
+        run: |
+          {
+            echo "## Publikasi Debug APK Gagal"
+            echo ""
+            echo "- **Status Publikasi:** FAILED"
+            echo "- **Application:** Antri Yuk"
+            echo "- **Application ID:** \`com.aistudio.antriyuk.k7m2px\`"
+            echo "- **Tindakan:** Periksa log langkah validasi atau izin GitHub Actions (\`contents: write\`) pada tab Actions."
+          } >> "$GITHUB_STEP_SUMMARY"
